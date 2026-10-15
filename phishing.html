@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phishing Simulator | CyberSafe </title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-title">🛡️ CyberSafe </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="learn.html">Learn</a></li>
+        <li><a href="phishing.html" class="active">Phishing Test</a></li>
+        <li><a href="password.html">Password Check</a></li>
+        <li><a href="report.html">Helpline</a></li>
+
+      </ul>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <h1>🎣 Phishing Simulator</h1>
+    <p>Read each message below and decide — is it Real or Fake?</p>
+  </header>
+
+  <section class="section">
+    <div class="container" id="messages">
+
+      <div class="message-card" data-answer="fake">
+        <span class="message-label">SMS</span>
+        <div class="message-body">Dear Customer, your SBI account KYC has expired. Update immediately to avoid blocking:
+          http://sbi-kyc-update.in/verify Failure to update within 24 hrs will suspend your account.</div>
+        <div class="message-buttons">
+          <button class="btn btn-real">✅ Real</button>
+          <button class="btn btn-fake">🚩 Fake</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="message-card" data-answer="fake">
+        <span class="message-label">SMS</span>
+        <div class="message-body">CONGRATULATIONS! Your number has WON Rs. 25,00,000 in KBC Lucky Draw 2026. To claim
+          your prize send your Name, Bank Details &amp; Aadhaar No. to WhatsApp +91-XXXXXXXXXX.</div>
+        <div class="message-buttons">
+          <button class="btn btn-real">✅ Real</button>
+          <button class="btn btn-fake">🚩 Fake</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="message-card" data-answer="fake">
+        <span class="message-label">Email</span>
+        <div class="message-body">From: support@paytm-secure-alerts.com
+          Subject: Your Paytm wallet will be deactivated
+
+          Your KYC is incomplete. Click here to verify now and avoid deactivation within 12 hours:
+          paytm-secure-alerts.com/verify-now</div>
+        <div class="message-buttons">
+          <button class="btn btn-real">✅ Real</button>
+          <button class="btn btn-fake">🚩 Fake</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+      <div class="message-card" data-answer="real">
+        <span class="message-label">Email</span>
+        <div class="message-body">From: order-update@amazon.in
+          Subject: Your Amazon.in order has been shipped
+
+          Hi, your order #402-XXXXXXX has shipped and is expected to arrive by Wed, 1 Oct. Track your package anytime
+          from the "Your Orders" section after signing in at amazon.in.</div>
+        <div class="message-buttons">
+          <button class="btn btn-real">✅ Real</button>
+          <button class="btn btn-fake">🚩 Fake</button>
+        </div>
+        <div class="feedback"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p>Made with 🛡️ for the <strong>Cybercrime Awareness &amp; Prevention Workshop</strong> — Community Engagement
+      Project</p>
+  </footer>
+
+  <script>
+    const explanations = {
+      fake: {
+        correct: "Correct! ✅ This is a FAKE message.",
+        incorrect: "Not quite. This is actually a FAKE message."
+      },
+      real: {
+        correct: "Correct! ✅ This is a REAL message.",
+        incorrect: "Not quite. This is actually a REAL message."
+      }
+    };
+
+    const reasons = [
+      "Banks never ask you to 'update KYC urgently' via an unofficial link. Legitimate SBI communication never uses random shortened or unofficial domains, and never threatens immediate account suspension over SMS.",
+      "Genuine lottery or prize winnings are never announced via random SMS, and no legitimate company asks for Aadhaar or bank details over WhatsApp to 'claim' a prize. This is a classic advance-fee scam.",
+      "The sender domain 'paytm-secure-alerts.com' is NOT an official Paytm domain. Official Paytm communication comes from paytm.com addresses, and creates urgency to trick you into clicking a fake link.",
+      "This message matches the pattern of a genuine Amazon order update: it comes from an official-style domain, doesn't ask for personal/financial information, and simply provides order tracking information."
+    ];
+
+    document.querySelectorAll('.message-card').forEach((card, index) => {
+      const answer = card.dataset.answer;
+      const buttons = card.querySelectorAll('.message-buttons button');
+      const feedback = card.querySelector('.feedback');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const choice = btn.classList.contains('btn-real') ? 'real' : 'fake';
+          const isCorrect = choice === answer;
+
+          feedback.classList.add('show');
+          feedback.classList.add(isCorrect ? 'correct' : 'incorrect');
+          feedback.innerHTML = `<strong>${isCorrect ? explanations[answer].correct : explanations[answer].incorrect}</strong>${reasons[index]}`;
+
+          buttons.forEach(b => b.disabled = true);
+        });
+      });
+    });
+  </script>
+
+</body>
+
+</html>
